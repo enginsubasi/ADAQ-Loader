@@ -31,6 +31,22 @@ namespace ADAQ_Loader {
 
             progressBarLoad.Value = 0;
 
+            if (!serialPortLoader.IsOpen) {
+                MessageBox.Show("Select serial port!");
+                return;
+            }
+
+            OpenFileDialog file = new OpenFileDialog();
+            file.Filter = "Srec or Mot file|*.srec;*.mot";
+
+            if (file.ShowDialog() == DialogResult.OK) {
+                
+            } else {
+                MessageBox.Show("Select valid file!");
+                return;
+            }
+
+            /* Erase program */
             serialPortLoader.Write("AT+ERASEAPP\r\n");
 
             do {
@@ -40,7 +56,8 @@ namespace ADAQ_Loader {
                 }
             } while (loopCtrlFlag);
 
-            string[] lines = File.ReadAllLines(textBoxFile.Text, Encoding.UTF8);
+            /* Flash update */
+            string[] lines = File.ReadAllLines(file.FileName, Encoding.UTF8);
             int lineCount = 0;
             foreach (string line in lines) {
 
@@ -53,32 +70,19 @@ namespace ADAQ_Loader {
 
                 do {
                     if (serialPortLoader.BytesToRead > 0) {
-                        Console.WriteLine(serialPortLoader.ReadExisting());
+                        string readedStringFromSerialPort = serialPortLoader.ReadExisting();
+                        Console.WriteLine(readedStringFromSerialPort);
                         loopCtrlFlag = false;
+
+                        if (readedStringFromSerialPort!="OK\r\n") {
+                            MessageBox.Show("File write problem!");
+                            return;
+                        }
                     }
                 } while (loopCtrlFlag);
 
                 progressBarLoad.Value = 100 * lineCount / lines.Count();
                 
-            }
-
-            if ( serialPortLoader.IsOpen ) {
-                serialPortLoader.Write(textBoxTemp.Text + "\r\n");
-            }
-
-            /* Erase program */
-
-            /* Flash update */
-
-            /* Clear bootloader flag */
-        }
-
-        private void textBoxFile_Click(object sender, EventArgs e) {
-            OpenFileDialog file = new OpenFileDialog();
-            file.Filter = "Srec or Mot file|*.srec;*.mot";
-            
-            if ( file.ShowDialog() == DialogResult.OK ) {
-                textBoxFile.Text = file.FileName;
             }
         }
 
@@ -106,6 +110,24 @@ namespace ADAQ_Loader {
                 } else {
                     serialPortLoader.PortName = comboBoxSerialPortList.SelectedItem.ToString();
                     serialPortLoader.Open();
+
+                    bool loopCtrlFlag = true;
+
+                    if (serialPortLoader.IsOpen) {
+                        serialPortLoader.Write("AT+WHOAMI\r\n");
+
+                        do {
+                            if (serialPortLoader.BytesToRead > 0) {
+                                if(serialPortLoader.ReadExisting()== "ADAQ Bootloader\r\n") {
+
+                                } else {
+                                    serialPortLoader.Close();
+                                    MessageBox.Show("ADAQ-Bootloader is not connected to "+serialPortLoader.PortName);
+                                }
+                                loopCtrlFlag = false;
+                            }
+                        } while (loopCtrlFlag);
+                    }
                 }
             }
         }
@@ -113,25 +135,38 @@ namespace ADAQ_Loader {
         private void timer100ms_Tick(object sender, EventArgs e) {
             if (serialPortLoader.IsOpen) {
                 comboBoxSerialPortList.BackColor = Color.LightGreen;
+
+                buttonProgram.Enabled = true;
+                progressBarLoad.Enabled = true;
+                buttonJTA.Enabled = true;
+                buttonBtlFlagClear.Enabled = true;
+                buttonEnterBtl.Enabled = true;
+                buttonInfo.Enabled = true;
+                buttonVer.Enabled = true;
+                buttonWho.Enabled = true;
+                buttonRepo.Enabled = true;
+               
             }
             else {
                 comboBoxSerialPortList.BackColor = Color.LightPink;
+
+                buttonProgram.Enabled = false;
+                progressBarLoad.Enabled = false;
+                buttonJTA.Enabled = false;
+                buttonBtlFlagClear.Enabled = false;
+                buttonEnterBtl.Enabled = false;
+                buttonInfo.Enabled = false;
+                buttonVer.Enabled = false;
+                buttonWho.Enabled = false;
+                buttonRepo.Enabled = false;
             }
         }
 
         private void buttonJTA_Click(object sender, EventArgs e) {
-            bool loopCtrlFlag = true;
 
             if (serialPortLoader.IsOpen) {
                 serialPortLoader.Write("AT+JTA\r\n");
             }
-
-            do {
-                if (serialPortLoader.BytesToRead > 0) {
-                    Console.WriteLine(serialPortLoader.ReadExisting());
-                    loopCtrlFlag = false;
-                }
-            } while (loopCtrlFlag);
         }
 
         private void FormADAQLoaderPanel_Load(object sender, EventArgs e) {
@@ -143,14 +178,29 @@ namespace ADAQ_Loader {
 
             if (serialPortLoader.IsOpen) {
                 serialPortLoader.Write("AT+BFCLR\r\n");
+            
+                do {
+                    if (serialPortLoader.BytesToRead > 0) {
+                        Console.WriteLine(serialPortLoader.ReadExisting());
+                        loopCtrlFlag = false;
+                    }
+                } while (loopCtrlFlag);
             }
+        }
 
-            do {
-                if (serialPortLoader.BytesToRead > 0) {
-                    Console.WriteLine(serialPortLoader.ReadExisting());
-                    loopCtrlFlag = false;
-                }
-            } while (loopCtrlFlag);
+        private void buttonEnterBtl_Click(object sender, EventArgs e) {
+            bool loopCtrlFlag = true;
+
+            if (serialPortLoader.IsOpen) {
+                serialPortLoader.Write("AT+BFSET\r\n");
+            
+                do {
+                    if (serialPortLoader.BytesToRead > 0) {
+                        Console.WriteLine(serialPortLoader.ReadExisting());
+                        loopCtrlFlag = false;
+                    }
+                } while (loopCtrlFlag);
+            }
         }
     }
 }

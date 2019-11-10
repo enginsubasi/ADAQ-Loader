@@ -27,14 +27,16 @@
             this.labelLCP = new System.Windows.Forms.Label();
             this.serialPortLoader = new System.IO.Ports.SerialPort(this.components);
             this.comboBoxSerialPortList = new System.Windows.Forms.ComboBox();
-            this.textBoxFile = new System.Windows.Forms.TextBox();
             this.buttonProgram = new System.Windows.Forms.Button();
             this.progressBarLoad = new System.Windows.Forms.ProgressBar();
             this.buttonJTA = new System.Windows.Forms.Button();
             this.buttonEnterBtl = new System.Windows.Forms.Button();
             this.buttonBtlFlagClear = new System.Windows.Forms.Button();
             this.timer100ms = new System.Windows.Forms.Timer(this.components);
-            this.textBoxTemp = new System.Windows.Forms.TextBox();
+            this.buttonInfo = new System.Windows.Forms.Button();
+            this.buttonVer = new System.Windows.Forms.Button();
+            this.buttonRepo = new System.Windows.Forms.Button();
+            this.buttonWho = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // labelLCP
@@ -61,18 +63,9 @@
             this.comboBoxSerialPortList.Text = "Select Com Port...";
             this.comboBoxSerialPortList.TextChanged += new System.EventHandler(this.comboBoxSerialPortList_TextChanged);
             // 
-            // textBoxFile
-            // 
-            this.textBoxFile.Location = new System.Drawing.Point(18, 92);
-            this.textBoxFile.Name = "textBoxFile";
-            this.textBoxFile.Size = new System.Drawing.Size(203, 20);
-            this.textBoxFile.TabIndex = 4;
-            this.textBoxFile.Text = "Select file (*.srec or *.mot)";
-            this.textBoxFile.Click += new System.EventHandler(this.textBoxFile_Click);
-            // 
             // buttonProgram
             // 
-            this.buttonProgram.Location = new System.Drawing.Point(18, 118);
+            this.buttonProgram.Location = new System.Drawing.Point(18, 92);
             this.buttonProgram.Name = "buttonProgram";
             this.buttonProgram.Size = new System.Drawing.Size(203, 23);
             this.buttonProgram.TabIndex = 5;
@@ -82,14 +75,14 @@
             // 
             // progressBarLoad
             // 
-            this.progressBarLoad.Location = new System.Drawing.Point(18, 148);
+            this.progressBarLoad.Location = new System.Drawing.Point(18, 122);
             this.progressBarLoad.Name = "progressBarLoad";
             this.progressBarLoad.Size = new System.Drawing.Size(203, 23);
             this.progressBarLoad.TabIndex = 6;
             // 
             // buttonJTA
             // 
-            this.buttonJTA.Location = new System.Drawing.Point(18, 178);
+            this.buttonJTA.Location = new System.Drawing.Point(18, 152);
             this.buttonJTA.Name = "buttonJTA";
             this.buttonJTA.Size = new System.Drawing.Size(203, 23);
             this.buttonJTA.TabIndex = 7;
@@ -99,16 +92,17 @@
             // 
             // buttonEnterBtl
             // 
-            this.buttonEnterBtl.Location = new System.Drawing.Point(18, 236);
+            this.buttonEnterBtl.Location = new System.Drawing.Point(18, 210);
             this.buttonEnterBtl.Name = "buttonEnterBtl";
             this.buttonEnterBtl.Size = new System.Drawing.Size(203, 23);
             this.buttonEnterBtl.TabIndex = 8;
             this.buttonEnterBtl.Text = "Enter bootloader mode";
             this.buttonEnterBtl.UseVisualStyleBackColor = true;
+            this.buttonEnterBtl.Click += new System.EventHandler(this.buttonEnterBtl_Click);
             // 
             // buttonBtlFlagClear
             // 
-            this.buttonBtlFlagClear.Location = new System.Drawing.Point(18, 207);
+            this.buttonBtlFlagClear.Location = new System.Drawing.Point(18, 181);
             this.buttonBtlFlagClear.Name = "buttonBtlFlagClear";
             this.buttonBtlFlagClear.Size = new System.Drawing.Size(203, 23);
             this.buttonBtlFlagClear.TabIndex = 9;
@@ -121,29 +115,58 @@
             this.timer100ms.Enabled = true;
             this.timer100ms.Tick += new System.EventHandler(this.timer100ms_Tick);
             // 
-            // textBoxTemp
+            // buttonInfo
             // 
-            this.textBoxTemp.Location = new System.Drawing.Point(18, 266);
-            this.textBoxTemp.Name = "textBoxTemp";
-            this.textBoxTemp.Size = new System.Drawing.Size(203, 20);
-            this.textBoxTemp.TabIndex = 10;
+            this.buttonInfo.Location = new System.Drawing.Point(18, 239);
+            this.buttonInfo.Name = "buttonInfo";
+            this.buttonInfo.Size = new System.Drawing.Size(98, 23);
+            this.buttonInfo.TabIndex = 10;
+            this.buttonInfo.Text = "Info";
+            this.buttonInfo.UseVisualStyleBackColor = true;
+            // 
+            // buttonVer
+            // 
+            this.buttonVer.Location = new System.Drawing.Point(123, 239);
+            this.buttonVer.Name = "buttonVer";
+            this.buttonVer.Size = new System.Drawing.Size(98, 23);
+            this.buttonVer.TabIndex = 11;
+            this.buttonVer.Text = "Version";
+            this.buttonVer.UseVisualStyleBackColor = true;
+            // 
+            // buttonRepo
+            // 
+            this.buttonRepo.Location = new System.Drawing.Point(123, 268);
+            this.buttonRepo.Name = "buttonRepo";
+            this.buttonRepo.Size = new System.Drawing.Size(98, 23);
+            this.buttonRepo.TabIndex = 12;
+            this.buttonRepo.Text = "Repo";
+            this.buttonRepo.UseVisualStyleBackColor = true;
+            // 
+            // buttonWho
+            // 
+            this.buttonWho.Location = new System.Drawing.Point(18, 268);
+            this.buttonWho.Name = "buttonWho";
+            this.buttonWho.Size = new System.Drawing.Size(98, 23);
+            this.buttonWho.TabIndex = 13;
+            this.buttonWho.Text = "Who";
+            this.buttonWho.UseVisualStyleBackColor = true;
             // 
             // FormADAQLoaderPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(242, 306);
-            this.Controls.Add(this.textBoxTemp);
+            this.ClientSize = new System.Drawing.Size(242, 303);
+            this.Controls.Add(this.buttonWho);
+            this.Controls.Add(this.buttonRepo);
+            this.Controls.Add(this.buttonVer);
+            this.Controls.Add(this.buttonInfo);
             this.Controls.Add(this.buttonBtlFlagClear);
             this.Controls.Add(this.buttonEnterBtl);
             this.Controls.Add(this.buttonJTA);
             this.Controls.Add(this.progressBarLoad);
             this.Controls.Add(this.buttonProgram);
-            this.Controls.Add(this.textBoxFile);
             this.Controls.Add(this.comboBoxSerialPortList);
             this.Controls.Add(this.labelLCP);
-            this.MaximumSize = new System.Drawing.Size(258, 345);
-            this.MinimumSize = new System.Drawing.Size(258, 345);
             this.Name = "FormADAQLoaderPanel";
             this.Text = "ADAQ-Loader";
             this.Load += new System.EventHandler(this.FormADAQLoaderPanel_Load);
@@ -157,14 +180,16 @@
         private System.Windows.Forms.Label labelLCP;
         private System.IO.Ports.SerialPort serialPortLoader;
         private System.Windows.Forms.ComboBox comboBoxSerialPortList;
-        private System.Windows.Forms.TextBox textBoxFile;
         private System.Windows.Forms.Button buttonProgram;
         private System.Windows.Forms.ProgressBar progressBarLoad;
         private System.Windows.Forms.Button buttonJTA;
         private System.Windows.Forms.Button buttonEnterBtl;
         private System.Windows.Forms.Button buttonBtlFlagClear;
         private System.Windows.Forms.Timer timer100ms;
-        private System.Windows.Forms.TextBox textBoxTemp;
+        private System.Windows.Forms.Button buttonInfo;
+        private System.Windows.Forms.Button buttonVer;
+        private System.Windows.Forms.Button buttonRepo;
+        private System.Windows.Forms.Button buttonWho;
     }
 }
 
