@@ -1,5 +1,5 @@
 ﻿namespace ADAQ_Loader {
-    partial class Form1 {
+    partial class FormADAQLoaderPanel {
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -26,9 +26,15 @@
             this.components = new System.ComponentModel.Container();
             this.labelLCP = new System.Windows.Forms.Label();
             this.serialPortLoader = new System.IO.Ports.SerialPort(this.components);
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.buttonConnect = new System.Windows.Forms.Button();
-            this.buttonEraseApp = new System.Windows.Forms.Button();
+            this.comboBoxSerialPortList = new System.Windows.Forms.ComboBox();
+            this.textBoxFile = new System.Windows.Forms.TextBox();
+            this.buttonProgram = new System.Windows.Forms.Button();
+            this.progressBarLoad = new System.Windows.Forms.ProgressBar();
+            this.buttonJTA = new System.Windows.Forms.Button();
+            this.buttonEnterBtl = new System.Windows.Forms.Button();
+            this.buttonBtlFlagClear = new System.Windows.Forms.Button();
+            this.timer100ms = new System.Windows.Forms.Timer(this.components);
+            this.textBoxTemp = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // labelLCP
@@ -37,51 +43,110 @@
             this.labelLCP.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelLCP.Location = new System.Drawing.Point(13, 13);
             this.labelLCP.Name = "labelLCP";
-            this.labelLCP.Size = new System.Drawing.Size(287, 26);
+            this.labelLCP.Size = new System.Drawing.Size(211, 26);
             this.labelLCP.TabIndex = 0;
-            this.labelLCP.Text = "ADAQ-Loader Control Panel";
+            this.labelLCP.Text = "ADAQ-Loader Panel";
             // 
             // serialPortLoader
             // 
             this.serialPortLoader.BaudRate = 115200;
             // 
-            // comboBox1
+            // comboBoxSerialPortList
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(18, 65);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 21);
-            this.comboBox1.TabIndex = 1;
+            this.comboBoxSerialPortList.FormattingEnabled = true;
+            this.comboBoxSerialPortList.Location = new System.Drawing.Point(18, 65);
+            this.comboBoxSerialPortList.Name = "comboBoxSerialPortList";
+            this.comboBoxSerialPortList.Size = new System.Drawing.Size(203, 21);
+            this.comboBoxSerialPortList.TabIndex = 1;
+            this.comboBoxSerialPortList.Text = "Select Com Port...";
+            this.comboBoxSerialPortList.TextChanged += new System.EventHandler(this.comboBoxSerialPortList_TextChanged);
             // 
-            // buttonConnect
+            // textBoxFile
             // 
-            this.buttonConnect.Location = new System.Drawing.Point(146, 65);
-            this.buttonConnect.Name = "buttonConnect";
-            this.buttonConnect.Size = new System.Drawing.Size(75, 23);
-            this.buttonConnect.TabIndex = 2;
-            this.buttonConnect.Text = "Connect";
-            this.buttonConnect.UseVisualStyleBackColor = true;
+            this.textBoxFile.Location = new System.Drawing.Point(18, 92);
+            this.textBoxFile.Name = "textBoxFile";
+            this.textBoxFile.Size = new System.Drawing.Size(203, 20);
+            this.textBoxFile.TabIndex = 4;
+            this.textBoxFile.Text = "Select file (*.srec or *.mot)";
+            this.textBoxFile.Click += new System.EventHandler(this.textBoxFile_Click);
             // 
-            // buttonEraseApp
+            // buttonProgram
             // 
-            this.buttonEraseApp.Location = new System.Drawing.Point(18, 93);
-            this.buttonEraseApp.Name = "buttonEraseApp";
-            this.buttonEraseApp.Size = new System.Drawing.Size(203, 23);
-            this.buttonEraseApp.TabIndex = 3;
-            this.buttonEraseApp.Text = "Erase Application";
-            this.buttonEraseApp.UseVisualStyleBackColor = true;
+            this.buttonProgram.Location = new System.Drawing.Point(18, 118);
+            this.buttonProgram.Name = "buttonProgram";
+            this.buttonProgram.Size = new System.Drawing.Size(203, 23);
+            this.buttonProgram.TabIndex = 5;
+            this.buttonProgram.Text = "Program";
+            this.buttonProgram.UseVisualStyleBackColor = true;
+            this.buttonProgram.Click += new System.EventHandler(this.buttonProgram_Click);
             // 
-            // Form1
+            // progressBarLoad
+            // 
+            this.progressBarLoad.Location = new System.Drawing.Point(18, 148);
+            this.progressBarLoad.Name = "progressBarLoad";
+            this.progressBarLoad.Size = new System.Drawing.Size(203, 23);
+            this.progressBarLoad.TabIndex = 6;
+            // 
+            // buttonJTA
+            // 
+            this.buttonJTA.Location = new System.Drawing.Point(18, 178);
+            this.buttonJTA.Name = "buttonJTA";
+            this.buttonJTA.Size = new System.Drawing.Size(203, 23);
+            this.buttonJTA.TabIndex = 7;
+            this.buttonJTA.Text = "Jump to application";
+            this.buttonJTA.UseVisualStyleBackColor = true;
+            this.buttonJTA.Click += new System.EventHandler(this.buttonJTA_Click);
+            // 
+            // buttonEnterBtl
+            // 
+            this.buttonEnterBtl.Location = new System.Drawing.Point(18, 236);
+            this.buttonEnterBtl.Name = "buttonEnterBtl";
+            this.buttonEnterBtl.Size = new System.Drawing.Size(203, 23);
+            this.buttonEnterBtl.TabIndex = 8;
+            this.buttonEnterBtl.Text = "Enter bootloader mode";
+            this.buttonEnterBtl.UseVisualStyleBackColor = true;
+            // 
+            // buttonBtlFlagClear
+            // 
+            this.buttonBtlFlagClear.Location = new System.Drawing.Point(18, 207);
+            this.buttonBtlFlagClear.Name = "buttonBtlFlagClear";
+            this.buttonBtlFlagClear.Size = new System.Drawing.Size(203, 23);
+            this.buttonBtlFlagClear.TabIndex = 9;
+            this.buttonBtlFlagClear.Text = "Bootloader flag clear";
+            this.buttonBtlFlagClear.UseVisualStyleBackColor = true;
+            this.buttonBtlFlagClear.Click += new System.EventHandler(this.buttonBtlFlagClear_Click);
+            // 
+            // timer100ms
+            // 
+            this.timer100ms.Enabled = true;
+            this.timer100ms.Tick += new System.EventHandler(this.timer100ms_Tick);
+            // 
+            // textBoxTemp
+            // 
+            this.textBoxTemp.Location = new System.Drawing.Point(18, 266);
+            this.textBoxTemp.Name = "textBoxTemp";
+            this.textBoxTemp.Size = new System.Drawing.Size(203, 20);
+            this.textBoxTemp.TabIndex = 10;
+            // 
+            // FormADAQLoaderPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.buttonEraseApp);
-            this.Controls.Add(this.buttonConnect);
-            this.Controls.Add(this.comboBox1);
+            this.ClientSize = new System.Drawing.Size(242, 306);
+            this.Controls.Add(this.textBoxTemp);
+            this.Controls.Add(this.buttonBtlFlagClear);
+            this.Controls.Add(this.buttonEnterBtl);
+            this.Controls.Add(this.buttonJTA);
+            this.Controls.Add(this.progressBarLoad);
+            this.Controls.Add(this.buttonProgram);
+            this.Controls.Add(this.textBoxFile);
+            this.Controls.Add(this.comboBoxSerialPortList);
             this.Controls.Add(this.labelLCP);
-            this.Name = "Form1";
+            this.MaximumSize = new System.Drawing.Size(258, 345);
+            this.MinimumSize = new System.Drawing.Size(258, 345);
+            this.Name = "FormADAQLoaderPanel";
             this.Text = "ADAQ-Loader";
+            this.Load += new System.EventHandler(this.FormADAQLoaderPanel_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -91,9 +156,15 @@
 
         private System.Windows.Forms.Label labelLCP;
         private System.IO.Ports.SerialPort serialPortLoader;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.Button buttonConnect;
-        private System.Windows.Forms.Button buttonEraseApp;
+        private System.Windows.Forms.ComboBox comboBoxSerialPortList;
+        private System.Windows.Forms.TextBox textBoxFile;
+        private System.Windows.Forms.Button buttonProgram;
+        private System.Windows.Forms.ProgressBar progressBarLoad;
+        private System.Windows.Forms.Button buttonJTA;
+        private System.Windows.Forms.Button buttonEnterBtl;
+        private System.Windows.Forms.Button buttonBtlFlagClear;
+        private System.Windows.Forms.Timer timer100ms;
+        private System.Windows.Forms.TextBox textBoxTemp;
     }
 }
 
