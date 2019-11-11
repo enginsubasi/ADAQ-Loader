@@ -202,5 +202,77 @@ namespace ADAQ_Loader {
                 } while (loopCtrlFlag);
             }
         }
+
+        private void buttonInfo_Click(object sender, EventArgs e) {
+            bool loopCtrlFlag = true;
+            string readResponse = "";
+            if (serialPortLoader.IsOpen) {
+                serialPortLoader.Write("AT+INFO\r\n");
+
+                do {
+                    if (serialPortLoader.BytesToRead > 0) {
+                        readResponse = serialPortLoader.ReadExisting();
+                        Console.WriteLine(readResponse);
+                        loopCtrlFlag = false;
+                    }
+                } while (loopCtrlFlag);
+
+                MessageBox.Show(readResponse);
+            }
+        }
+
+        private void buttonWho_Click(object sender, EventArgs e) {
+            bool loopCtrlFlag = true;
+            string readResponse = "";
+            if (serialPortLoader.IsOpen) {
+                serialPortLoader.Write("AT+WHOAMI\r\n");
+
+                do {
+                    if (serialPortLoader.BytesToRead > 0) {
+                        readResponse = serialPortLoader.ReadExisting();
+                        Console.WriteLine(readResponse);
+                        loopCtrlFlag = false;
+                    }
+                } while (loopCtrlFlag);
+
+                MessageBox.Show(readResponse);
+            }
+        }
+
+        private void buttonVer_Click(object sender, EventArgs e) {
+            bool loopCtrlFlag = true;
+            string readResponse = "";
+            if (serialPortLoader.IsOpen) {
+                serialPortLoader.Write("AT+VER\r\n");
+
+                do {
+                    if (serialPortLoader.BytesToRead > 0) {
+                        readResponse = serialPortLoader.ReadExisting();
+                        Console.WriteLine(readResponse);
+                        loopCtrlFlag = false;
+                    }
+                } while (loopCtrlFlag);
+
+                MessageBox.Show(readResponse);
+            }
+        }
+
+        private void buttonRepo_Click(object sender, EventArgs e) {
+            bool loopCtrlFlag = true;
+            string readResponse = "";
+            if (serialPortLoader.IsOpen) {
+                serialPortLoader.Write("AT+REPO\r\n");
+
+                do {
+                    if (serialPortLoader.BytesToRead > 0) {
+                        readResponse = serialPortLoader.ReadExisting();
+                        Console.WriteLine(readResponse);
+                        loopCtrlFlag = false;
+                    }
+                } while (loopCtrlFlag);
+
+                MessageBox.Show(readResponse);
+            }
+        }
     }
 }

@@ -37,6 +37,7 @@
             this.buttonVer = new System.Windows.Forms.Button();
             this.buttonRepo = new System.Windows.Forms.Button();
             this.buttonWho = new System.Windows.Forms.Button();
+            this.labelVer = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // labelLCP
@@ -123,6 +124,7 @@
             this.buttonInfo.TabIndex = 10;
             this.buttonInfo.Text = "Info";
             this.buttonInfo.UseVisualStyleBackColor = true;
+            this.buttonInfo.Click += new System.EventHandler(this.buttonInfo_Click);
             // 
             // buttonVer
             // 
@@ -132,6 +134,7 @@
             this.buttonVer.TabIndex = 11;
             this.buttonVer.Text = "Version";
             this.buttonVer.UseVisualStyleBackColor = true;
+            this.buttonVer.Click += new System.EventHandler(this.buttonVer_Click);
             // 
             // buttonRepo
             // 
@@ -141,6 +144,7 @@
             this.buttonRepo.TabIndex = 12;
             this.buttonRepo.Text = "Repo";
             this.buttonRepo.UseVisualStyleBackColor = true;
+            this.buttonRepo.Click += new System.EventHandler(this.buttonRepo_Click);
             // 
             // buttonWho
             // 
@@ -150,12 +154,23 @@
             this.buttonWho.TabIndex = 13;
             this.buttonWho.Text = "Who";
             this.buttonWho.UseVisualStyleBackColor = true;
+            this.buttonWho.Click += new System.EventHandler(this.buttonWho_Click);
+            // 
+            // labelVer
+            // 
+            this.labelVer.AutoSize = true;
+            this.labelVer.Location = new System.Drawing.Point(181, 39);
+            this.labelVer.Name = "labelVer";
+            this.labelVer.Size = new System.Drawing.Size(40, 13);
+            this.labelVer.TabIndex = 14;
+            this.labelVer.Text = "v.1.0.0";
             // 
             // FormADAQLoaderPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(242, 303);
+            this.Controls.Add(this.labelVer);
             this.Controls.Add(this.buttonWho);
             this.Controls.Add(this.buttonRepo);
             this.Controls.Add(this.buttonVer);
@@ -167,8 +182,10 @@
             this.Controls.Add(this.buttonProgram);
             this.Controls.Add(this.comboBoxSerialPortList);
             this.Controls.Add(this.labelLCP);
+            this.MaximumSize = new System.Drawing.Size(258, 342);
+            this.MinimumSize = new System.Drawing.Size(258, 342);
             this.Name = "FormADAQLoaderPanel";
-            this.Text = "ADAQ-Loader";
+            this.Text = "ADAQ-Loader Panel";
             this.Load += new System.EventHandler(this.FormADAQLoaderPanel_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -190,6 +207,7 @@
         private System.Windows.Forms.Button buttonVer;
         private System.Windows.Forms.Button buttonRepo;
         private System.Windows.Forms.Button buttonWho;
+        private System.Windows.Forms.Label labelVer;
     }
 }
 
